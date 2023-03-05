@@ -17,7 +17,7 @@ data = {
 }
 req = requests.post('https://www.reddit.com/api/v1/access_token', auth=auth, data=data, headers=headers)
 TOKEN = req.json()['access_token']
-headers['Authorization'] = f'bearer {TOKEN}'
+headers['Authorization'] = "bearer " + TOKEN
 
 link = 'https://oauth.reddit.com/r/' + SUBREDDIT + '/top'
 req = requests.get(link, headers=headers)
@@ -25,4 +25,4 @@ req = requests.get(link, headers=headers)
 for post in req.json()['data']['children']:
     title = post['data']['title']
     print(title)
-
+    
