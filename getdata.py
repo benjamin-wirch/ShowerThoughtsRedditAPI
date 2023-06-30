@@ -39,7 +39,7 @@ def __headers__(CLIENT_ID: str = keys.CLIENT_ID,
         yield headers
 
 
-def getdata(subreddit: str,
+def getdata(subreddit: str = DEFAULT_SUBREDDIT,
             headers: HeaderGenerator = __headers__()) -> DataGenerator:
     subreddit = subreddit.strip('/')
     if '/' in subreddit:
