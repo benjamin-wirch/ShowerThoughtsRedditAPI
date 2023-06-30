@@ -1,30 +1,26 @@
-import getdata
 import time
 
-#Formats data into 16x2 char format for 1602 LCD screen
+from ShowerThoughtsRedditAPI import getdata, DEFAULT_SUBREDDIT
+
+# Formats data into 16x2 char format for 1602 LCD screen
 while True:
-    lists = getdata.makelist()
+    # data is now a generator
+    data = getdata(DEFAULT_SUBREDDIT)
     splitwords = []
 
-    for s in lists:
+    for s in data:
         words = s.split()
         temp = ''
         for w in words:
-            if len(temp + w) <= 16:
-                temp += w + ' '
-            else:
-                splitwords.append(temp[:-1])
-                temp = w + ' '
-        splitwords.append(temp[:-1])
-        splitwords.append('\n')
-        splitter = ''
+            if len(f'{temp}{w}') <= 16:
+                temp = f'{temp}{w} '
+                continue
+
+            splitwords.append(temp.strip())
+            temp = f'{w} '
+        splitwords.append(f'{temp.strip()}\n')
+
     for i in range(0, len(splitwords), 2):
-        grouper = splitwords[i: i+2]
-        if len(grouper) < 2:
-            print(grouper[0])
-            time.sleep(4)
-            continue
-        else:
-            print(grouper[0])
-            print(grouper[1])
-            time.sleep(4)
+        grouper = splitwords[i: i + 2]
+        print(*grouper, sep='\n')
+        time.sleep(4)
